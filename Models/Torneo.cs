@@ -9,6 +9,7 @@
 
 namespace Parcial_3.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -22,7 +23,8 @@ namespace Parcial_3.Models
         public int ValorInscripcion { get; set; }
         public System.DateTime FechaTorneo { get; set; }
         public string Integrantes { get; set; }
-    
+
+        [JsonIgnore]
         public virtual AdministradorITM AdministradorITM { get; set; }
     }
 }
