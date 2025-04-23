@@ -1,0 +1,61 @@
+﻿using Microsoft.Ajax.Utilities;
+using Parcial_3.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace Parcial_3.Clases
+{
+    public class clsLogin
+    {
+        public clsLogin()
+        {
+            loginRespuesta = new LoginRespuesta();
+        }
+        private DBTorneoEntities dbTorneo = new DBTorneoEntities();
+        public Login login { get; set; }
+        public LoginRespuesta loginRespuesta { get; set; }
+        public bool ValidarUsuario()
+        {
+            try
+            {
+                AdministradorITM admin = dbTorneo.AdministradorITMs.FirstOrDefault(u => u.Usuario == login.Usuario);
+                if (admin == null)
+                {
+                    loginRespuesta.Autenticado = false;
+                    loginRespuesta.Mensaje = "Usuario no existe";
+                    return false;
+                }
+                login.Clave = admin.Clave;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                loginRespuesta.Autenticado = false;
+                loginRespuesta.Mensaje = ex.Message;
+                return false;
+            }
+        }
+        private bool ValidarClave()
+        {
+            try
+            {
+                AdministradorITM admin = dbTorneo.AdministradorITMs.FirstOrDefault(u => u.Usuario == login.Usuario && u.Clave == login.Clave);
+                if (admin == null)
+                {
+                    loginRespuesta.Autenticado = false;
+                    loginRespuesta.Mensaje = "La clave no coincide";
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                loginRespuesta.Autenticado = false;
+                loginRespuesta.Mensaje = ex.Message;
+                return false;
+            }
+        }
+    }
+}
