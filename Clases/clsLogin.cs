@@ -57,5 +57,33 @@ namespace Parcial_3.Clases
                 return false;
             }
         }
+        public IQueryable<LoginRespuesta> Ingresar()
+        {
+            // if (login.Usuario == "admin")
+            if (ValidarUsuario() && ValidarClave())
+            {
+                //Se genera el token
+                string Token = TokenGenerator.GenerateTokenJwt(login.Usuario);
+                string token = TokenGenerator.GenerateTokenJwt(login.Usuario);
+                return from A in dbTorneo.Set<AdministradorITM>()
+                       where A.Usuario == login.Usuario &&
+                               A.Clave == login.Clave
+                       select new LoginRespuesta
+                       {
+                           Usuario = A.Usuario,
+                           Autenticado = true,
+                           Perfil = A.NombreCompleto,
+                           PaginaInicio = "",
+                           Token = token,
+                           Mensaje = ""
+                       };
+            }
+            else
+            {
+                List<LoginRespuesta> listRpta = new List<LoginRespuesta>();
+                listRpta.Add(loginRespuesta);
+                return listRpta.AsQueryable();
+            }
+        }
     }
 }

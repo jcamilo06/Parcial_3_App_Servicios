@@ -61,7 +61,7 @@ namespace Parcial_3.Controllers
 
         [HttpGet]
         [Route("ConsultarXNombreTorneo")]
-        public Torneo ConsultarXNombreTorneo(string nombreTorneo)
+        public List<Torneo> ConsultarXNombreTorneo(string nombreTorneo)
         {
             try
             {

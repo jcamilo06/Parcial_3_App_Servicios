@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Parcial_3.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 
@@ -72,11 +74,24 @@ namespace Parcial_3.Clases
             }
         }
 
-        public Torneo ConsultarXNombre(string nombreTorneo)
+        public List<Torneo> ConsultarXNombre(string nombreTorneo)
         {
             try
             {
-                Torneo torn = dbTorneo.Torneos.FirstOrDefault(t => t.NombreTorneo == nombreTorneo);
+                List<Torneo> torn = dbTorneo.Torneos.Where(t => t.NombreTorneo == nombreTorneo).OrderBy(t => t.idTorneos).ToList();
+                return torn;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public Torneo ConsultarXID(int idTorneo)
+        {
+            try
+            {
+                Torneo torn = dbTorneo.Torneos.FirstOrDefault(t => t.idTorneos == idTorneo);
                 return torn;
             }
             catch (Exception)
@@ -90,7 +105,7 @@ namespace Parcial_3.Clases
             string respuesta = "";
             try
             {
-                Torneo torn = ConsultarXNombre(torneo.NombreTorneo);
+                Torneo torn = ConsultarXID(torneo.idTorneos);
                 if (torn == null)
                 {
                     respuesta = "Torneo no encontrado";
@@ -113,7 +128,7 @@ namespace Parcial_3.Clases
             string respuesta = "";
             try
             {
-                Torneo torn = ConsultarXNombre(torneo.NombreTorneo);
+                Torneo torn = ConsultarXID(torneo.idTorneos);
                 if (torn == null)
                 {
                     respuesta = "Torneo no encontrado";
