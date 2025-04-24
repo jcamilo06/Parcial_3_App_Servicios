@@ -27,7 +27,6 @@ namespace Parcial_3.Clases
                     loginRespuesta.Mensaje = "Usuario no existe";
                     return false;
                 }
-                login.Clave = admin.Clave;
                 return true;
             }
             catch (Exception ex)

@@ -10,6 +10,7 @@ using System.Web.Http;
 namespace Parcial_3.Controllers
 {
     [RoutePrefix("api/Torneo")]
+    [Authorize]
     public class TorneoController : ApiController
     {
         [HttpGet]
